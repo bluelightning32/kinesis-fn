@@ -7,7 +7,7 @@
       "Application": "Pcbnew",
       "Version":     "5.1.12-1.fc35"
     },
-    "CreationDate":  "2022-04-23T06:04:12-07:00"
+    "CreationDate":  "2022-04-30T07:46:19-07:00"
   },
   "GeneralSpecs":
   {
@@ -15,7 +15,7 @@
     {
       "Name": "left",
       "GUID": "6c656674-2e6b-4696-9361-645f70636258",
-      "Revision": "v1.1"
+      "Revision": "v1.2"
     },
     "Size":
     {
