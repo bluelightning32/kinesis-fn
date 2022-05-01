@@ -10,13 +10,13 @@ const { hullChain } = jscad.hulls
 const { vectorText } = jscad.text
 
 const roundedText = (str) => {
-  const pen = circle({radius: 0.2})
+  const pen = circle({radius: 0.28})
 
   return center({},
     colorize(
       [0.7, 0.7, 0.7],
       union(extrudeLinear({height: 1}, 
-        vectorText({height: 1.4, letterSpacing: 1.0}, str).map((segment) => {
+        vectorText({height: 1.5, letterSpacing: 1.0}, str).map((segment) => {
           return hullChain(segment.map((point) => translate([point[0] * .75, point[1]], pen)))
         })))))
 }
@@ -46,15 +46,13 @@ const key = (name) => {
   const text = translateZ(6.3, roundedText(name))
   
   return [
-    prism,
-    prong1,
-    prong2,
+    union(prism, prong1, prong2),
     text
   ]
 }
 
 const main = () => {
-  const names = ['ESC', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'PSCN', 'SCLK', '||', 'KPD', 'PRGM']
+  const names = ['ESC', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'PSCN', 'SCLK', '| |', 'KPD', 'PRGM']
   let offset = -10
   return names.map((name) => {
     offset += 8.25
