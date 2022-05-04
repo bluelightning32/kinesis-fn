@@ -22,6 +22,8 @@ const roundedText = (str) => {
 }
 
 const key = (name) => {
+  const keyHeight = 6.3
+
   const prism = extrudeFromSlices({
     callback: (progress, index, base) => {
       if (progress == 0) {
@@ -29,7 +31,7 @@ const key = (name) => {
           rectangle({size: [7.75, 11]})))
       } else {
         return slice.transform(
-          mat4.fromTranslation(mat4.create(), [0, 0, 6.3]),
+          mat4.fromTranslation(mat4.create(), [0, 0, keyHeight]),
           slice.fromSides(geom2.toSides(
             rectangle({size: [7.15, 10.4]})))
           )
@@ -37,16 +39,63 @@ const key = (name) => {
     }
   }, 0)
   
+  const prismHallow = extrudeFromSlices({
+    callback: (progress, index, base) => {
+      if (progress == 0) {
+        return slice.fromSides(geom2.toSides(
+          rectangle({size: [7.75 - 3, 11 - 3]})))
+      } else {
+        return slice.transform(
+          mat4.fromTranslation(mat4.create(), [0, 0, keyHeight - 1.5]),
+          slice.fromSides(geom2.toSides(
+            rectangle({size: [7.15 - 3, 10.4 -3]})))
+          )
+      }
+    }
+  }, 0)
+  
   const prongThickness = 1
   const prongOuterSpacing = 6.4
+  const prongHeight = 9.75
   
-  const prong1 = cuboid({center: [0.875, prongOuterSpacing/2 - prongThickness/2, 6.3 - 9.75/2], size: [3.05, prongThickness, 9.75]})
+  const prongMain = cuboid({center: [0.875, prongOuterSpacing/2 - prongThickness/2, keyHeight - prongHeight/2], size: [3.05, prongThickness, 9.75]})
+  const prongChamfer = extrudeFromSlices({
+    callback: (progress, index, base) => {
+      if (progress == 0) {
+        return slice.fromSides(geom2.toSides(
+          rectangle({center: [0.875, prongOuterSpacing/2 - prongThickness/2], size: [3.05, prongThickness]})))
+      } else {
+        return slice.transform(
+          mat4.fromTranslation(mat4.create(), [0, 0, 5.3]),
+          slice.fromSides(geom2.toSides(
+            rectangle({center: [0, prongOuterSpacing/2 - prongThickness/2], size: [7.15, prongThickness + 1]})))
+          )
+      }
+    }
+  }, 0)
+  const prongChamferVert = extrudeFromSlices({
+    callback: (progress, index, base) => {
+      if (progress == 0) {
+        return slice.fromSides(geom2.toSides(
+          rectangle({center: [0.875, prongOuterSpacing/2 - prongThickness/2 - 0.5/2], size: [1, 2 + 0.5]})))
+      } else {
+        return slice.transform(
+          mat4.fromTranslation(mat4.create(), [0, 0, 5.3]),
+          slice.fromSides(geom2.toSides(
+            rectangle({center: [0.875, prongOuterSpacing/2 - prongThickness/2 - 2/2], size: [1, 2 + 2]})))
+          )
+      }
+    }
+  }, 0)
+  const prong1 = union(prongMain, prongChamfer, prongChamferVert)
   const prong2 = mirrorY(prong1)
+  //const prongCross = cuboid({center: [0.875, 0, keyHeight/2], size: [1, prongOuterSpacing, keyHeight]})
+  
   
   const text = translateZ(6.3, roundedText(name))
   
   return [
-    union(prism, prong1, prong2),
+    union(subtract(prism, prismHallow), prong1, prong2),
     text
   ]
 }
