@@ -2,7 +2,7 @@ const jscad = require('@jscad/modeling')
 const { geom2, path2 } = jscad.geometries
 const { mat4 } = jscad.maths
 const { circle, cuboid, rectangle } = jscad.primitives
-const { center, mirrorY, translate, translateX, translateZ } = jscad.transforms
+const { center, mirrorY, rotateX, translate, translateX, translateZ } = jscad.transforms
 const { colorize } = jscad.colors
 const { union, subtract, intersect } = jscad.booleans
 const { extrudeFromSlices, extrudeLinear, slice } = jscad.extrusions
@@ -56,7 +56,7 @@ const main = () => {
   let offset = -10
   return names.map((name) => {
     offset += 8.25
-    return translateX(offset, key(name))
+    return translateX(offset, rotateX(Math.PI/2, key(name)))
   })
 }
 
