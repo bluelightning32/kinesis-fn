@@ -9,8 +9,8 @@ const main = () => {
   const baseHeight = 4.8
   const base2d = geom2.fromPoints([
       [-3.6, -9.3],
-      [96.9, -9.3],
-      [97.9, -8.3],
+      [100.4, -9.3],
+      [101.4, -8.3],
       [123.9, -8.3],
       [123.9, 16.2],
       [106.1, 16.2],
@@ -31,10 +31,16 @@ const main = () => {
   
   const slot1 = cuboid({center: [10.1, slotY, baseHeight/2],
                         size: [slotSizeX, slotSizeY, baseHeight]})
+  const slotCut1 = cuboid({center: [10.1, slotY, 3*baseHeight/4],
+                        size: [2*slotSizeX, 15, baseHeight/2]})
   const slot2 = cuboid({center: [59.8, slotY, baseHeight/2],
                         size: [slotSizeX, slotSizeY, baseHeight]})
+  const slotCut2 = cuboid({center: [59.8, slotY, 3*baseHeight/4],
+                        size: [2*slotSizeX, 15, baseHeight/2]})
   const slot3 = cuboid({center: [94.8, slotY, baseHeight/2],
                         size: [slotSizeX, slotSizeY, baseHeight]})
+  const slotCut3 = cuboid({center: [94.8, slotY, 3*baseHeight/4],
+                        size: [2*slotSizeX, 15, baseHeight/2]})
   
   const screwAnchorOuter = 5.1
   const screwAnchorInner = 2.6
@@ -72,7 +78,7 @@ const main = () => {
                                height: screwAnchorHeight, radius: screwAnchorInner/2}) 
   
   return [subtract(union(base, screwAnchor1, screwAnchor2, screwAnchor3, screwAnchor4),
-                   centerHole, slot1, slot2, slot3,
+                   centerHole, slot1, slotCut1, slot2, slotCut2, slot3, slotCut3,
                    screwHole1, screwCut1, screwHole2, screwCut2, screwHole3, screwCut3, screwHole4)]
 }
 
