@@ -1,24 +1,43 @@
 const jscad = require('@jscad/modeling')
 const { geom2 } = jscad.geometries
+const { mat4 } = jscad.maths
 const { cuboid, cylinder } = jscad.primitives
 const { rotateX, translate, translateZ } = jscad.transforms
 const { union, subtract } = jscad.booleans
-const { extrudeLinear } = jscad.extrusions
+const { extrudeFromSlices, extrudeLinear, slice } = jscad.extrusions
 
 const main = () => {
   const baseHeight = 4.8
-  const base2d = geom2.fromPoints([
-      [-0.5, -9.3],
-      [100.4, -9.3],
-      [101.4, -8.3],
-      [123.9, -8.3],
-      [123.9, 16.2],
-      [114.75, 16.2],
-      [113.75, 17.2],
-      [-1.9, 17.2],
-      [-5.70, -3.25]
-    ])
-  const base = extrudeLinear({height: baseHeight}, base2d)
+  const baseHighYPoints = [
+    [123.9, 16.2],
+    [114.75, 16.2],
+    [113.75, 17.2],
+    [-1.9, 17.2]
+  ]
+  const baseLowYPoints = [
+    [-5.70, -3.25],
+    [-0.5, -9.3],
+    [100.4, -9.3],
+    [101.4, -8.3],
+    [123.9, -8.3]
+  ]
+  const baseBottomHighYPoints = baseHighYPoints.map(p => [p[0], p[1] + 2.5])
+  baseBottomHighYPoints[3][0] += (baseBottomHighYPoints[3][0] - baseLowYPoints[0][0]) / (baseBottomHighYPoints[3][1] - baseLowYPoints[0][1]) * 2.5
+  const baseTop = geom2.fromPoints(baseLowYPoints.concat(baseHighYPoints))
+  const baseBottom = geom2.fromPoints(baseLowYPoints.concat(baseBottomHighYPoints))
+  const base = extrudeFromSlices({
+    callback: (progress, index, base) => {
+      if (progress == 0) {
+        return slice.fromSides(geom2.toSides(baseBottom))
+      } else {
+        return slice.transform(
+          mat4.fromTranslation(mat4.create(), [0, 0, baseHeight]),
+          slice.fromSides(geom2.toSides(baseTop))
+          )
+      }
+    }
+  }, 0)
+
   
   const centerHoleSizeX = 113.75
   const centerHoleSizeY = 14.8
