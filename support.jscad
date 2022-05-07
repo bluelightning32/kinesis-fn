@@ -1,7 +1,7 @@
 const jscad = require('@jscad/modeling')
 const { geom2 } = jscad.geometries
 const { cuboid, cylinder } = jscad.primitives
-const { translateZ } = jscad.transforms
+const { rotateX, translate, translateZ } = jscad.transforms
 const { union, subtract } = jscad.booleans
 const { extrudeLinear } = jscad.extrusions
 
@@ -13,8 +13,8 @@ const main = () => {
       [101.4, -8.3],
       [123.9, -8.3],
       [123.9, 16.2],
-      [106.1, 16.2],
-      [105.1, 17.2],
+      [114.75, 16.2],
+      [113.75, 17.2],
       [-1.9, 17.2],
       [-5.82, -3.85]
     ])
@@ -26,19 +26,19 @@ const main = () => {
                              size: [centerHoleSizeX, centerHoleSizeY, baseHeight]})
   
   const slotSizeX = 7
-  const slotSizeY = 2.3
+  const slotSizeY = 1.6
   const slotY = -5.75
   
-  const slot1 = cuboid({center: [10.1, slotY, baseHeight/2],
-                        size: [slotSizeX, slotSizeY, baseHeight]})
+  const slot1 = translate([10.1, slotY, baseHeight/2], rotateX(Math.PI/5, cuboid({
+                        size: [slotSizeX, slotSizeY, 2*baseHeight]})))
   const slotCut1 = cuboid({center: [10.1, slotY, 3*baseHeight/4],
                         size: [2*slotSizeX, 15, baseHeight/2]})
-  const slot2 = cuboid({center: [59.8, slotY, baseHeight/2],
-                        size: [slotSizeX, slotSizeY, baseHeight]})
+  const slot2 = translate([59.8, slotY, baseHeight/2], rotateX(Math.PI/5, cuboid({
+                        size: [slotSizeX, slotSizeY, 2*baseHeight]})))
   const slotCut2 = cuboid({center: [59.8, slotY, 3*baseHeight/4],
                         size: [2*slotSizeX, 15, baseHeight/2]})
-  const slot3 = cuboid({center: [94.8, slotY, baseHeight/2],
-                        size: [slotSizeX, slotSizeY, baseHeight]})
+  const slot3 = translate([94.8, slotY, baseHeight/2], rotateX(Math.PI/5, cuboid({
+                        size: [slotSizeX, slotSizeY, 2*baseHeight]})))
   const slotCut3 = cuboid({center: [94.8, slotY, 3*baseHeight/4],
                         size: [2*slotSizeX, 15, baseHeight/2]})
   
@@ -72,9 +72,9 @@ const main = () => {
   const screwCut3 = cuboid({center: [78.6, -5.7 + screwAnchorInner/2 - .4 + 5, baseHeight + 5],
                             size: [10, 10, 10]})
 
-  const screwAnchor4 = cylinder({center: [118.8, 1.65, screwAnchorHeight/2],
+  const screwAnchor4 = cylinder({center: [118.8, 0.85, screwAnchorHeight/2],
                                  height: screwAnchorHeight, radius: screwAnchorOuter/2}) 
-  const screwHole4 = cylinder({center: [118.8, 1.65, screwAnchorHeight/2],
+  const screwHole4 = cylinder({center: [118.8, 0.85, screwAnchorHeight/2],
                                height: screwAnchorHeight, radius: screwAnchorInner/2}) 
   
   return [subtract(union(base, screwAnchor1, screwAnchor2, screwAnchor3, screwAnchor4),
