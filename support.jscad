@@ -2,7 +2,7 @@ const jscad = require('@jscad/modeling')
 const { geom2 } = jscad.geometries
 const { mat4 } = jscad.maths
 const { circle, cuboid, cylinder } = jscad.primitives
-const { rotateX, translate, translateZ } = jscad.transforms
+const { mirrorY, rotateX, translate, translateZ } = jscad.transforms
 const { union, subtract } = jscad.booleans
 const { extrudeFromSlices, extrudeLinear, slice } = jscad.extrusions
 
@@ -119,12 +119,16 @@ const main = () => {
                                height: screwAnchorHeight, radius: screwAnchorInner/2})
   const screwTaper4 = translate([118.8, 0.85, 0], screwTaper)
 
-  return [subtract(union(base, screwAnchor1, screwAnchor2, screwAnchor3, screwAnchor4),
-                   centerHole, slot1, slotCut1, slot2, slotCut2, slot3, slotCut3,
-                   screwHole1, screwCut1, screwTaper1,
-                   screwHole2, screwCut2, screwTaper2,
-                   screwHole3, screwCut3, screwTaper3,
-                   screwHole4, screwTaper4)]
+  const rightSupport =
+    subtract(
+      union(base, screwAnchor1, screwAnchor2, screwAnchor3, screwAnchor4),
+      centerHole, slot1, slotCut1, slot2, slotCut2, slot3, slotCut3,
+      screwHole1, screwCut1, screwTaper1,
+      screwHole2, screwCut2, screwTaper2,
+      screwHole3, screwCut3, screwTaper3,
+      screwHole4, screwTaper4)
+  const leftSupport = translate([0, -20, 0], mirrorY(rightSupport))
+  return [rightSupport, leftSupport]
 }
 
 module.exports = { main }
