@@ -8,7 +8,7 @@ const { extrudeLinear } = jscad.extrusions
 const main = () => {
   const baseHeight = 4.8
   const base2d = geom2.fromPoints([
-      [-1.1, -9.3],
+      [-0.5, -9.3],
       [100.4, -9.3],
       [101.4, -8.3],
       [123.9, -8.3],
@@ -16,7 +16,7 @@ const main = () => {
       [114.75, 16.2],
       [113.75, 17.2],
       [-1.9, 17.2],
-      [-5.82, -3.85]
+      [-5.70, -3.25]
     ])
   const base = extrudeLinear({height: baseHeight}, base2d)
   
@@ -46,30 +46,32 @@ const main = () => {
   const screwAnchorInner = 2.6
   const screwAnchorHeight = 6.5
 
-  const screwAnchor1 = cylinder({center: [-1.55, -1, screwAnchorHeight/2],
+  const screwAnchor1 = cylinder({center: [-1.55, -1.5, screwAnchorHeight/2],
                                  height: screwAnchorHeight, radius: screwAnchorOuter/2}) 
 
-  const screwHole1 = cylinder({center: [-1.55, -1, screwAnchorHeight/2],
+  const screwHole1 = cylinder({center: [-1.55, -1.5, screwAnchorHeight/2],
                                height: screwAnchorHeight, radius: screwAnchorInner/2})
   const screwCut1 = translateZ(
-    baseHeight,
-    extrudeLinear({height: screwAnchorHeight - baseHeight},
-                   geom2.fromPoints([[-1.55 + .9 - 10, -1 + .9 + 10],
-                                     [-1.55 + .9 + 10, -1 + .9 - 10],
-                                     [-1.55 + .9 + 10, -1 + .9 + 10]])))
+    baseHeight - 0.001,
+    extrudeLinear({height: screwAnchorHeight - baseHeight + 0.001},
+                   geom2.fromPoints([[-1.55 + .9 - 10, -1.5 + .9 + 10],
+                                     [-1.55 + .9 + 10, -1.5 + .9 - 10],
+                                     [-1.55 + .9 + 10, -1.5 + .9 + 10]])))
 
-  const screwAnchor2 = cylinder({center: [26.2, -5.7, screwAnchorHeight/2],
+  const centerScrewY = -6.2
+
+  const screwAnchor2 = cylinder({center: [26.2, centerScrewY, screwAnchorHeight/2],
                                  height: screwAnchorHeight, radius: screwAnchorOuter/2}) 
-  const screwHole2 = cylinder({center: [26.2, -5.7, screwAnchorHeight/2],
+  const screwHole2 = cylinder({center: [26.2, centerScrewY, screwAnchorHeight/2],
                                height: screwAnchorHeight, radius: screwAnchorInner/2})
-  const screwCut2 = cuboid({center: [26.2, -5.7 + screwAnchorInner/2 - .4 + 5, baseHeight + 5],
+  const screwCut2 = cuboid({center: [26.2, centerScrewY + screwAnchorInner/2 - .4 + 5, baseHeight + 5],
                             size: [10, 10, 10]})
 
-  const screwAnchor3 = cylinder({center: [78.6, -5.7, screwAnchorHeight/2],
+  const screwAnchor3 = cylinder({center: [78.6, centerScrewY, screwAnchorHeight/2],
                                  height: screwAnchorHeight, radius: screwAnchorOuter/2}) 
-  const screwHole3 = cylinder({center: [78.6, -5.7, screwAnchorHeight/2],
+  const screwHole3 = cylinder({center: [78.6, centerScrewY, screwAnchorHeight/2],
                                height: screwAnchorHeight, radius: screwAnchorInner/2}) 
-  const screwCut3 = cuboid({center: [78.6, -5.7 + screwAnchorInner/2 - .4 + 5, baseHeight + 5],
+  const screwCut3 = cuboid({center: [78.6, centerScrewY + screwAnchorInner/2 - .4 + 5, baseHeight + 5],
                             size: [10, 10, 10]})
 
   const screwAnchor4 = cylinder({center: [118.8, 0.85, screwAnchorHeight/2],
