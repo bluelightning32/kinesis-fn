@@ -8,7 +8,7 @@ const { extrudeLinear } = jscad.extrusions
 const main = () => {
   const baseHeight = 4.8
   const base2d = geom2.fromPoints([
-      [-3.6, -9.3],
+      [-1.1, -9.3],
       [100.4, -9.3],
       [101.4, -8.3],
       [123.9, -8.3],
@@ -16,7 +16,7 @@ const main = () => {
       [106.1, 16.2],
       [105.1, 17.2],
       [-1.9, 17.2],
-      [-6.3, -6.6]
+      [-5.82, -3.85]
     ])
   const base = extrudeLinear({height: baseHeight}, base2d)
   
