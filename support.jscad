@@ -90,9 +90,9 @@ const main = () => {
   const screwCut1 = translateZ(
     baseHeight - 0.001,
     extrudeLinear({height: screwAnchorHeight - baseHeight + 0.001},
-                   geom2.fromPoints([[-1.7 + .9 - 10, -1.0 + .5 + 10],
-                                     [-1.7 + .9 + 10, -1.0 + .5 - 10],
-                                     [-1.7 + .9 + 10, -1.0 + .5 + 10]])))
+                   geom2.fromPoints([[-1.7 + .9 - 10, -1.0 + .8 + 10],
+                                     [-1.7 + .9 + 10, -1.0 + .8 - 10],
+                                     [-1.7 + .9 + 10, -1.0 + .8 + 10]])))
   const screwTaper1 = translate([-1.7, -1.0, 0], screwTaper)
 
   const centerScrewY = -6.2
