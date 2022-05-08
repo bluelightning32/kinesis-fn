@@ -7,7 +7,7 @@ const { union, subtract } = jscad.booleans
 const { extrudeFromSlices, extrudeLinear, slice } = jscad.extrusions
 
 const main = () => {
-  const baseHeight = 4.8
+  const baseHeight = 3.8
   const baseHighYPoints = [
     [123.9, 16.2],
     [114.75, 16.2],
@@ -21,8 +21,8 @@ const main = () => {
     [101.4, -8.3],
     [123.9, -8.3]
   ]
-  const baseBottomHighYPoints = baseHighYPoints.map(p => [p[0], p[1] + 2.5])
-  baseBottomHighYPoints[3][0] += (baseBottomHighYPoints[3][0] - baseLowYPoints[0][0]) / (baseBottomHighYPoints[3][1] - baseLowYPoints[0][1]) * 2.5
+  const baseBottomHighYPoints = baseHighYPoints.map(p => [p[0], p[1] + 2])
+  baseBottomHighYPoints[3][0] += (baseBottomHighYPoints[3][0] - baseLowYPoints[0][0]) / (baseBottomHighYPoints[3][1] - baseLowYPoints[0][1]) * 2
   const baseTop = geom2.fromPoints(baseLowYPoints.concat(baseHighYPoints))
   const baseBottom = geom2.fromPoints(baseLowYPoints.concat(baseBottomHighYPoints))
   const base = extrudeFromSlices({
@@ -47,24 +47,25 @@ const main = () => {
   const slotSizeX = 7
   const slotSizeY = 1.6
   const slotY = -5.75
+  const slotCutHeight = 2.4
 
   const slot1 = translate([10.1, slotY, baseHeight/2], rotateX(Math.PI/5, cuboid({
                         size: [slotSizeX, slotSizeY, 2*baseHeight]})))
-  const slotCut1 = cuboid({center: [10.1, slotY, 3*baseHeight/4],
-                        size: [2*slotSizeX, 15, baseHeight/2]})
+  const slotCut1 = cuboid({center: [10.1, slotY, 3*slotCutHeight/2],
+                        size: [2*slotSizeX, 15, slotCutHeight]})
   const slot2 = translate([59.8, slotY, baseHeight/2], rotateX(Math.PI/5, cuboid({
                         size: [slotSizeX, slotSizeY, 2*baseHeight]})))
-  const slotCut2 = cuboid({center: [59.8, slotY, 3*baseHeight/4],
-                        size: [2*slotSizeX, 15, baseHeight/2]})
+  const slotCut2 = cuboid({center: [59.8, slotY, 3*slotCutHeight/2],
+                        size: [2*slotSizeX, 15, slotCutHeight]})
   const slot3 = translate([94.8, slotY, baseHeight/2], rotateX(Math.PI/5, cuboid({
                         size: [slotSizeX, slotSizeY, 2*baseHeight]})))
-  const slotCut3 = cuboid({center: [94.8, slotY, 3*baseHeight/4],
-                        size: [2*slotSizeX, 15, baseHeight/2]})
+  const slotCut3 = cuboid({center: [94.8, slotY, 3*slotCutHeight/2],
+                        size: [2*slotSizeX, 15, slotCutHeight]})
 
   const screwAnchorOuter = 6
   const screwAnchorOuter4 = 5.1
   const screwAnchorInner = 2.6
-  const screwAnchorHeight = 6.5
+  const screwAnchorHeight = 5.5
 
   const screwTaper = extrudeFromSlices({
     callback: (progress, index, base) => {
