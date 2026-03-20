@@ -13,7 +13,7 @@ This project is about replacing the function keys on the Kinesis Essential and K
 1. Left replacement circuit board (order from a circuit board fabricator)
 2. Right replacement circuit board (order from a circuit board fabricator)
 3. 18 ML1A-11JW cherry mechanical key switches. [Digikey](https://www.digikey.com/en/products/detail/cherry-americas-llc/ML1A-11JW/16990?s=N4IgTCBcDa5gbPAtAWQDIEYCCSMYFIDqSAcgCIgC6AvkA) had the best price I could find, but they are out of stock right now.
-4. 2 flat flex cables with 13 pins and 1.25mm pitch. They need to be at least 50mm long, but longer is okay. The pitch (distance between pins) must be correct. If necessary, you can buy a cable with more pins and cut off the extra. I could only find this on [AliExpress](https://www.aliexpress.us/item/3256801627091246.html?spm=a2g0s.12269583.0.0.629a404dzJNHRq&gatewayAdapt=glo2usa4itemAdapt).
+4. 2 flat flex cables with 13 pins and 1.25mm pitch. They need to be at least 50mm long, but longer is okay. The pitch (distance between pins) must be correct. If necessary, you can buy a cable with more pins and cut off the extra. I could only find this on [AliExpress](https://www.aliexpress.us/item/3256801627091246.html?spm=a2g0s.12269583.0.0.629a404dzJNHRq&gatewayAdapt=glo2usa4itemAdapt). On each end of the cable, the traces should be exposed on the top side (see picture later).
 5. 2 connectors for the flat flex cables. This [connector](https://www.digikey.com/en/products/detail/molex/0039532135/3160262?s=N4IgTCBcDaIOoFkCMAWArGAbAWgHIBEQBdAXyA) from Digikey should be an exact fit. This [connector](https://www.aliexpress.us/item/2251832596444359.html?spm=a2g0o.order_list.order_list_main.30.21ef1802ZNNYwS&gatewayAdapt=glo2usa4itemAdapt) from AliExpress will fit if you bend the pins a little.
 6. 4 screws. #4 3/8 inch pan head. These are common in American hardware stores.
 7. Filament for the 3d prints
@@ -45,6 +45,8 @@ Remove the old function keys from the keyboard. They are heat staked in place. S
 Add the supports to the keyboard. They should somewhat snap into place, partially secured with the remaining stems of the heat stakes. The supports will not be fully secure until the screws are added later.
 
 ![supports added](pictures/supportsadded.jpg)
+
+Each end of the flex cable should have the traces exposed on the same side. Here is the top and bottom of an example flex connector: ![flex cable](pictures/flexcable.jpg)
 
 Connect the function row boards to the main board using the flex connectors. Before putting the keyboard back together, hook it up to a computer and verify that the new function keys work. `xev` is a good Linux program to test most of the keys. Use the keyboard's click sound to verify that the last two (keypad and program) work.
 
